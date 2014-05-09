@@ -1,0 +1,16 @@
+#MySQL Database Backup
+#Author William Paddock, Pol Llovet, Thomas Heetderks
+#Date of Creation 05/09/14
+
+#/bin/sh
+
+#Directory of Backups
+BKDIR=/root/databaseBackups
+
+#Name of file for database
+NAME=allDatabases
+
+cd $BKDIR
+mysqldump --single-transaction -uusername -ppassword -C -A | gzip > $NAME.sql
+mv $NAME.sql.gz `date +%Y-%m-%d`_$NAME.sql.gz
+find $BKDIR -type f -mtime +14 -exec rm -f {} \;
